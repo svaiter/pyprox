@@ -5,7 +5,7 @@ Proximal algorithms
 from __future__ import division
 import numpy as np
 import math
-from .utils import operator_norm, soft_thresholding
+from pyprox.utils import operator_norm, soft_thresholding
 
 def _output_helper(full_output, retall, x, fx, iterations, allvecs):
     if full_output:
