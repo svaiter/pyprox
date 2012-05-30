@@ -1,0 +1,8 @@
+*.pyc
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+doc/_build
+.idea
