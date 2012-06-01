@@ -7,6 +7,9 @@ import numpy as np
 import math
 from pyprox.utils import operator_norm, soft_thresholding
 
+__all__ = ['douglas_rachford','forward_backward','admm',
+           'iterative_soft_thresholding']
+
 def _output_helper(full_output, retall, x, fx, iterations, allvecs):
     if full_output:
         retlist = x, fx

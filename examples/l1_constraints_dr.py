@@ -7,9 +7,12 @@ Basis Pursuit with Douglas Rachford
 
 # modules
 from __future__ import division
+import time
+
 import numpy as np
 import pylab as plt
-from pyprox.algorithms import douglas_rachford
+
+from pyprox import douglas_rachford
 from pyprox.utils import soft_thresholding
 
 # Dimension of the problem
@@ -26,8 +29,11 @@ ProxF = soft_thresholding
 ProxG = lambda x,tau: x + np.dot(A.T, np.linalg.solve(np.dot(A,A.T),
     y - np.dot(A,x)))
 
+t1 = time.time()
 x, fx = douglas_rachford(ProxF, ProxG, np.zeros((n,1)),
     maxiter=1000, full_output=1, retall=0, callback=F)
+t2 = time.time()
+print "Performed 1000 iterations in " + str(t2-t1) + " seconds."
 
 plt.plot(fx)
 plt.show()

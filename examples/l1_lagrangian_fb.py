@@ -9,6 +9,8 @@ compressed sensing regularization
 
 # modules
 from __future__ import division
+import time
+
 import numpy as np
 import pylab as plt
 
@@ -40,9 +42,13 @@ maxiter = 1000
 res = np.zeros((maxiter,len(methods)))
 i = 0
 for method in methods:
+    t1 = time.time()
     x, fx = forward_backward(ProxF, GradG, np.zeros((n,1)), L,
         maxiter=maxiter, method=method,
         full_output=1, retall=0, callback=callback)
+    t2 = time.time()
+    print "[" + method + "]: Performed 1000 iterations in " \
+          + str(t2-t1) +"seconds."
     res[:,i] = fx
     i += 1
 
