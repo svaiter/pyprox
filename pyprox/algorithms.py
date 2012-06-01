@@ -26,7 +26,40 @@ def douglas_rachford(prox_f, prox_g, x0,
                      maxiter=1000, mu = 1, gamma = 1,
                      full_output=0, retall=0, callback=None):
     """
-    dr
+    Minimize the sum of two functions using the Douglas Rachford splitting.
+    scheme.
+
+    This algorithm assumes that F, G are both "proximable" where the
+    optimization objective reads::
+
+        F(x) + G(x)
+
+    Parameters
+    ----------
+    prox_f : callable
+        should take two arguments : an ndarray and a float.
+    prox_g : callable
+        same as prox_f.
+    x0 : ndarray
+        initial guess for the solution.
+    maxiter : int, optional
+        maximum number of iterations.
+    mu : float, optional
+    gamma : float, optional
+    full_output : bool, optional
+        non-zero to return all optional outputs.
+    retall : bool, optional
+        Return a list of results at each iteration if non-zero.
+    callback : callable, optional
+        An optional user-supplied function to call after each iteration.
+        Called as callback(xk), where xk is the current parameter vector.
+
+    References
+    ----------
+    Proximal Splitting Methods in Signal Processing,
+    Patrick L. Combettes and Jean-Christophe Pesquet, in:
+    Fixed-Point Algorithms for Inverse Problems in Science and Engineering,
+    New York: Springer-Verlag, 2010.
     """
     def rProx_f(x, tau):
         return 2*prox_f(x, tau) - x
