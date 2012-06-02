@@ -6,4 +6,5 @@
 *.out
 doc/_build
 doc/modules/generated
+doc/auto_examples
 .idea

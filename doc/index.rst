@@ -1,20 +1,21 @@
-.. pyprox documentation master file, created by
-   sphinx-quickstart on Wed May 30 19:53:48 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to pyprox's documentation!
 ==================================
 
-Contents:
+.. topic:: Proximal algorithms made easy in Python
+
+    ``pyprox`` is a Python module integrating classic proximal
+    algorithms in the popular scientific Python toolkit
+    (`numpy  <http://numpy.scipy.org>`_, `scipy
+    <http://www.scipy.org>`_, `matplotlib
+    <http://matplotlib.sourceforge.net/>`_).
+
+**License:** Open source, commercially usable: **BSD license**
+
+User guide
+==========
 
 .. toctree::
    :maxdepth: 2
 
-    Reference <modules/classes.rst>
-
-Indices and tables
-==================
-
-* :ref:`search`
+   user_guide
 

@@ -5,7 +5,7 @@ The :mod:`pyprox.algorithms` module includes the proximal schemes of pyprox.
 from __future__ import division
 import numpy as np
 import math
-from pyprox.utils import operator_norm, soft_thresholding
+from pyprox.utils import operator_norm
 
 def _output_helper(full_output, retall, x, fx, iterations, allvecs):
     if full_output:
@@ -88,6 +88,48 @@ def douglas_rachford(prox_f, prox_g, x0,
 def forward_backward(prox_f, grad_g, x0, L,
                      maxiter=1000, method='fb', fbdamping=1.8,
                      full_output=0, retall=0, callback=None):
+    """Minimize the sum of two functions using the Forward-backward splitting.
+    scheme.
+
+    This algorithm assumes that F, G is "proximable" and L has a
+    L-Lipschitz gradient where the optimization objective reads::
+
+        F(x) + G(x)
+
+    Parameters
+    ----------
+    prox_f : callable
+        should take two arguments : an ndarray and a float.
+    grad_g : callable
+        same as prox_f.
+    x0 : ndarray
+        initial guess for the solution.
+    L : float
+        Module of Lipschitz of nabla G.
+    maxiter : int, optional
+        maximum number of iterations.
+    method : string, optional,
+        can be 'fb', 'fista' or 'nesterov'
+    fbdamping : float, optional
+    full_output : bool, optional
+        non-zero to return all optional outputs.
+    retall : bool, optional
+        Return a list of results at each iteration if non-zero.
+    callback : callable, optional
+        An optional user-supplied function to call after each iteration.
+        Called as callback(xk), where xk is the current parameter vector.
+
+    Returns
+    -------
+    xrec: ndarray
+    fx: list
+
+    References
+    ----------
+    P. L. Combettes and V. R. Wajs, Signal recovery by proximal
+    forward-backward splitting,
+    Multiscale Model. Simul., 4 (2005), pp. 1168-1200
+    """
     t = 1
     tt = 2/L
     gg = 0
@@ -129,8 +171,54 @@ def forward_backward(prox_f, grad_g, x0, L,
 def admm(prox_fs, prox_g, K, KS, x0,
          maxiter=100, theta = 1, sigma=None, tau=None,
          full_output=0, retall=0, callback=None):
-    """
-    dr
+    """Minimize an optimization problem using the Preconditioned Alternating
+     direction method of multipliers
+
+    This algorithm assumes that F, G are both "proximable" where the
+    optimization objective reads::
+
+        F(K(x)) + G(x)
+
+    where K is a linear operator.
+
+    Parameters
+    ----------
+    prox_fs : callable
+        should take two arguments : an ndarray and a float.
+    prox_g : callable
+        same as prox_f.
+    K : callable or ndarray
+        a linear operator
+    KS : callable or ndarray
+        the dual linear operator
+    x0 : ndarray
+        initial guess for the solution.
+    maxiter : int, optional
+        maximum number of iterations.
+    theta : float, optional
+    sigma : float, optional
+        parameters of the method.
+        They should satisfy sigma * tay * norm(K)^2 < 1
+    full_output : bool, optional
+        non-zero to return all optional outputs.
+    retall : bool, optional
+        Return a list of results at each iteration if non-zero.
+    callback : callable, optional
+        An optional user-supplied function to call after each iteration.
+        Called as callback(xk), where xk is the current parameter vector.
+
+    Returns
+    -------
+    xrec: ndarray
+    fx: list
+
+    References
+    ----------
+    A. Chambolle and T. Pock,
+    A First-Order Primal-Dual Algorithm for Convex Problems
+    with Applications to Imaging,
+    JOURNAL OF MATHEMATICAL IMAGING AND VISION
+    Volume 40, Number 1 (2011)
     """
     if not(sigma and tau):
         L = operator_norm(
@@ -161,15 +249,3 @@ def admm(prox_fs, prox_g, K, KS, x0,
             allvecs.append(x)
 
     return _output_helper(full_output, retall, x, fx, iterations, allvecs)
-
-def iterative_soft_thresholding(A,y,x0=None,
-                                maxiter=1000, method='fb', fbdamping=1.8,
-                                full_output=0, retall=0, callback=None):
-    ProxF = soft_thresholding
-    GradG = lambda x : np.dot(A.T,np.dot(A,x) - y)
-    L = np.linalg.norm(A, 2) ** 2
-    if x0 is None:
-        x0 = np.zeros((A.T*y).size)
-    return forward_backward(ProxF, GradG, x0, L, maxiter=maxiter,
-        method=method, fbdamping=fbdamping,full_output=full_output,
-        retall=retall, callback=callback)

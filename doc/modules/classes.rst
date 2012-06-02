@@ -26,4 +26,15 @@ Primal algorithms
     :template: function.rst
 
     douglas_rachford
+    forward_backward
 
+Primal-dual algorithms
+----------------------
+
+.. currentmodule:: pyprox
+
+.. autosummary::
+    :toctree: generated/
+    :template: function.rst
+
+    admm
