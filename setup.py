@@ -28,9 +28,7 @@ def configuration(parent_package='', top_path=None):
     config = Configuration(None, parent_package, top_path,
         namespace_packages=['pyprox'])
 
-    config.add_subpackage('algorithms')
-    config.add_subpackage('datasets')
-    config.add_subpackage('utils')
+    config.add_subpackage('pyprox')
 
     return config
 
