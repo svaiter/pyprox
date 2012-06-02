@@ -18,8 +18,7 @@ shell and type:
     >>> y = x0 + 0.01 * np.random.randn(100,1)
     >>> ProxF = pp.soft_thresholding
     >>> GradG = lambda x : x - y
-    >>> L = np.linalg.norm(A, 2) ** 2
-    >>> xrec = forward_backward(ProxF, GradG, y, L)
+    >>> xrec = pp.forward_backward(ProxF, GradG, y, 1)
 
 Requirements
 ------------

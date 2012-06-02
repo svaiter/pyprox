@@ -1,0 +1,7 @@
+include *.rst
+include test.py
+include scikits/__init__.py
+recursive-include doc *
+recursive-include examples *
+recursive-include sklearn *.c *.h *.pyx
+recursive-include sklearn/datasets *.csv *.csv.gz *.TXT *.rst *.jpg *.txt
