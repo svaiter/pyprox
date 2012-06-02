@@ -1,14 +1,11 @@
 """
-Proximal algorithms
+The :mod:`pyprox.algorithms` module includes the proximal schemes of pyprox.
 """
 
 from __future__ import division
 import numpy as np
 import math
 from pyprox.utils import operator_norm, soft_thresholding
-
-__all__ = ['douglas_rachford','forward_backward','admm',
-           'iterative_soft_thresholding']
 
 def _output_helper(full_output, retall, x, fx, iterations, allvecs):
     if full_output:
@@ -25,8 +22,7 @@ def _output_helper(full_output, retall, x, fx, iterations, allvecs):
 def douglas_rachford(prox_f, prox_g, x0,
                      maxiter=1000, mu = 1, gamma = 1,
                      full_output=0, retall=0, callback=None):
-    """
-    Minimize the sum of two functions using the Douglas Rachford splitting.
+    """Minimize the sum of two functions using the Douglas Rachford splitting.
     scheme.
 
     This algorithm assumes that F, G are both "proximable" where the
@@ -53,6 +49,11 @@ def douglas_rachford(prox_f, prox_g, x0,
     callback : callable, optional
         An optional user-supplied function to call after each iteration.
         Called as callback(xk), where xk is the current parameter vector.
+
+    Returns
+    -------
+    xrec: ndarray
+    fx: list
 
     References
     ----------

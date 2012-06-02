@@ -5,4 +5,5 @@
 *.swp
 *.out
 doc/_build
+doc/modules/generated
 .idea

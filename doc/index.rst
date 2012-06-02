@@ -11,12 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-
+    Reference <modules/classes.rst>
 
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
