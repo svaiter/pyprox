@@ -1,6 +1,7 @@
 """
 The :mod:`pyprox.algorithms` module includes the proximal schemes of pyprox.
 """
+# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
 
 from __future__ import division
 import numpy as np
@@ -145,7 +146,7 @@ def forward_backward(prox_f, grad_g, x0, L,
         if method == 'fb':
             x = prox_f(x - fbdamping/L * grad_g(x), fbdamping/L)
         elif method == 'fista':
-            xnew = prox_f(y - 1/L * grad_g(y), fbdamping/L)
+            xnew = prox_f(y - 1/L * grad_g(y), 1/L)
             tnew = (1+math.sqrt(1 + 4* t ** 2))/2
             y = xnew + (t-1)/tnew * (xnew-x)
             x = xnew

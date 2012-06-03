@@ -1,3 +1,5 @@
+# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
+
 from __future__ import division
 from os.path import join, dirname
 from matplotlib.image import imread

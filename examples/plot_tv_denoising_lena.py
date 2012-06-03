@@ -3,8 +3,10 @@
 Total variation denoising using Chambolle Pock
 ==============================================
 """
-
+# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
 from __future__ import division
+print __doc__
+
 import time
 
 import numpy as np

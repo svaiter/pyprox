@@ -4,9 +4,11 @@ Basis Pursuit with Douglas Rachford
 ===================================
 
 """
+# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
+from __future__ import division
+print __doc__
 
 # modules
-from __future__ import division
 import time
 
 import numpy as np
