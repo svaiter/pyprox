@@ -292,6 +292,11 @@ def admm(prox_fs, prox_g, K, KS, x0,
     JOURNAL OF MATHEMATICAL IMAGING AND VISION
     Volume 40, Number 1 (2011)
     """
+    if isinstance(K, np.ndarray):
+        return admm(prox_fs, prox_g, lambda u : np.dot(K,u),
+            lambda v : np.dot(K.T,v), x0, maxiter=maxiter, theta=theta,
+            sigma=sigma, tau=tau, full_output=full_output, retall=retall,
+            callback=callback)
     if not(sigma and tau):
         L = operator_norm(
             lambda x : KS(K(x)),
