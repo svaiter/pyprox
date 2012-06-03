@@ -168,6 +168,77 @@ def forward_backward(prox_f, grad_g, x0, L,
 
     return _output_helper(full_output, retall, x, fx, iterations, allvecs)
 
+def forward_backward_dual(grad_fs, prox_gs, K, KS, x0, L,
+                          maxiter = 100, method='fb', fbdamping=1.8,
+                          full_output=0, retall=0, callback=None):
+    """Minimize the sum of the strongly convex function and a proper convex
+    function.
+
+    This algorithm minimizes
+
+        F(x) + G(K(x))
+
+    where F is strongly convex, G is a proper convex function and K is a
+    linear operator by a duality argument.
+
+    Parameters
+    ----------
+    grad_fs : callable
+        should take one argument : an ndarray.
+    prox_gs : callable
+        should take two arguments : an ndarray and a float.
+    K : callable or ndarray
+        a linear operator
+    KS : callable or ndarray
+        the dual linear operator
+    x0 : ndarray
+        initial guess for the solution.
+    L : float
+        Module of Lipschitz of nabla G.
+    maxiter : int, optional
+        maximum number of iterations.
+    method : string, optional,
+        can be 'fb', 'fista' or 'nesterov'
+    fbdamping : float, optional
+    full_output : bool, optional
+        non-zero to return all optional outputs.
+    retall : bool, optional
+        Return a list of results at each iteration if non-zero.
+    callback : callable, optional
+        An optional user-supplied function to call after each iteration.
+        Called as callback(xk), where xk is the current parameter vector.
+
+    Returns
+    -------
+    xrec: ndarray
+    fx: list
+
+    Notes
+    -----
+    This algorithm use the equivalence of
+
+        min_x F(x) + G(K(x))        (*)
+
+    with
+
+        min_u F^*(-K(u)) + G^*(u)   (**)
+
+    using x = grad(F^*)(-K(u)) where the convex dual function is
+
+        F^*(y) = sup_x = <x,y> - F(x)
+
+    It uses `forward_backward` as a solver of (**)
+    """
+    new_callback = lambda u : callback(grad_fs(-KS(u)))
+    new_grad = lambda u : - K(grad_fs(-KS(u)))
+    u0 = K(x0)
+    res = forward_backward(prox_gs, new_grad, u0, L, maxiter=maxiter,
+        method=method, fbdamping=fbdamping, full_output=full_output,
+        retall=retall, callback=new_callback)
+
+    res[0] = grad_fs(-KS(res[0]))
+    return res
+
 def admm(prox_fs, prox_g, K, KS, x0,
          maxiter=100, theta = 1, sigma=None, tau=None,
          full_output=0, retall=0, callback=None):
