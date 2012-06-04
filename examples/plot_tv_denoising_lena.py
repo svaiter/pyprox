@@ -5,6 +5,9 @@ Total variation denoising using Chambolle Pock
 """
 # Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
 from __future__ import division
+from pyprox import dual_prox
+from pyprox.operators import soft_thresholding
+
 print __doc__
 
 import time
@@ -52,9 +55,9 @@ normalize = lambda u : u/np.tile(
     (np.maximum(amp(u), 1e-10))[:,:,np.newaxis],
     (1,1,2))
 proxF = lambda u,tau : np.tile(
-    pp.soft_thresholding(amp(u), alpha*tau)[:,:,np.newaxis],
+    soft_thresholding(amp(u), alpha*tau)[:,:,np.newaxis],
     (1,1,2) )* normalize(u)
-proxFS = pp.dual_prox(proxF)
+proxFS = dual_prox(proxF)
 proxG = lambda x,tau : (x + tau*y) / (1+tau)
 
 callback = lambda x : G(x) + F(K(x))

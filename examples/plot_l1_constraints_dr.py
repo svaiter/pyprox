@@ -6,6 +6,8 @@ Basis Pursuit with Douglas Rachford
 """
 # Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
 from __future__ import division
+from pyprox.operators import soft_thresholding
+
 print __doc__
 
 # modules
@@ -15,7 +17,6 @@ import numpy as np
 import pylab as plt
 
 from pyprox import douglas_rachford
-from pyprox.utils import soft_thresholding
 
 # Dimension of the problem
 n = 500

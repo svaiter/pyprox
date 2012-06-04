@@ -16,8 +16,7 @@ import time
 import numpy as np
 import pylab as plt
 
-from pyprox import forward_backward
-from pyprox.utils import soft_thresholding
+from pyprox import forward_backward, soft_thresholding
 
 n = 600
 p = n//4

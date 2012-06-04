@@ -3,7 +3,7 @@ from numpy.testing import assert_array_almost_equal
 
 import numpy as np
 from pyprox.algorithms import forward_backward
-from pyprox.utils import soft_thresholding
+from pyprox.operators import soft_thresholding
 
 methods = ['fb', 'fista', 'nesterov']
 

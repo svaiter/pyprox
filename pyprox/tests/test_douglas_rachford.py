@@ -3,7 +3,7 @@ from numpy.testing import assert_array_almost_equal
 
 import numpy as np
 from pyprox.algorithms import douglas_rachford
-from pyprox.utils import soft_thresholding
+from pyprox.operators import soft_thresholding
 
 def test_dr_virtual_zero():
     # Virtual 0-prox
