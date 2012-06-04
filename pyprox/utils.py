@@ -18,17 +18,24 @@ def operator_norm(linop, n=None, maxiter=30, check=False):
         u = np.random.randn(n, 1)
     else:
         u = n
-    u = u / np.linalg.norm(u)
+    unorm = np.linalg.norm(u)
+    if unorm > 1e-10:
+        u = u / unorm
+    else:
+        return 0
     e = []
     for i in range(maxiter):
-        #TODO check validity of this formula
         if hasattr(linop,'T'):
             v = linop.T(linop(u))
         else:
             # assume square (implicit) operator
             v = linop(u)
         e.append((u[:] * v[:]).sum())
-        u = v / np.linalg.norm(v[:])
+        vnorm = np.linalg.norm(v[:])
+        if vnorm > 1e-10:
+            u = v / vnorm
+        else :
+            return 0
     L = e[-1]
     return L
 

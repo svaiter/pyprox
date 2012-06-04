@@ -169,7 +169,7 @@ def forward_backward(prox_f, grad_g, x0, L,
 
     return _output_helper(full_output, retall, x, fx, iterations, allvecs)
 
-def forward_backward_dual(grad_fs, prox_gs, K, KS, x0, L,
+def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
                           maxiter = 100, method='fb', fbdamping=1.8,
                           full_output=0, retall=0, callback=None):
     """Minimize the sum of the strongly convex function and a proper convex
@@ -230,17 +230,30 @@ def forward_backward_dual(grad_fs, prox_gs, K, KS, x0, L,
 
     It uses `forward_backward` as a solver of (**)
     """
-    new_callback = lambda u : callback(grad_fs(-KS(u)))
-    new_grad = lambda u : - K(grad_fs(-KS(u)))
+    if isinstance(K, np.ndarray):
+        op = lambda u : np.dot(K,u)
+        op.T = lambda u : np.dot(K.T,u)
+        return forward_backward_dual(grad_fs, prox_gs, op, x0, L,
+            maxiter=maxiter, method=method, fbdamping=fbdamping,
+            full_output=full_output, retall=retall, callback=callback)
+
+    if callback is None:
+        new_callback = None
+    else:
+        new_callback = lambda u : callback(grad_fs(-K.T(u)))
+    new_grad = lambda u : - K(grad_fs(-K.T(u)))
     u0 = K(x0)
     res = forward_backward(prox_gs, new_grad, u0, L, maxiter=maxiter,
         method=method, fbdamping=fbdamping, full_output=full_output,
         retall=retall, callback=new_callback)
 
-    res[0] = grad_fs(-KS(res[0]))
+    try:
+        res[0] = grad_fs(-K.T(res[0]))
+    except:
+        res = grad_fs(-K.T(res))
     return res
 
-def admm(prox_fs, prox_g, K, KS, x0,
+def admm(prox_fs, prox_g, K, x0,
          maxiter=100, theta = 1, sigma=None, tau=None,
          full_output=0, retall=0, callback=None):
     """Minimize an optimization problem using the Preconditioned Alternating
@@ -293,17 +306,21 @@ def admm(prox_fs, prox_g, K, KS, x0,
     Volume 40, Number 1 (2011)
     """
     if isinstance(K, np.ndarray):
-        return admm(prox_fs, prox_g, lambda u : np.dot(K,u),
-            lambda v : np.dot(K.T,v), x0, maxiter=maxiter, theta=theta,
+        op = lambda u : np.dot(K,u)
+        op.T = lambda u : np.dot(K.T,u)
+        return admm(prox_fs, prox_g, op, x0, maxiter=maxiter, theta=theta,
             sigma=sigma, tau=tau, full_output=full_output, retall=retall,
             callback=callback)
     if not(sigma and tau):
         L = operator_norm(
-            lambda x : KS(K(x)),
+            lambda x : K.T(K(x)),
             np.random.randn(x0.shape[0],1)
         )
-        sigma = 10
-        tau = .9 / (sigma * L)
+        sigma = 10.0
+        if sigma * L > 1e-10:
+            tau = .9 / (sigma * L)
+        else:
+            tau = 0.0
 
     x = x0.copy()
     x1 = x0.copy()
@@ -316,7 +333,7 @@ def admm(prox_fs, prox_g, K, KS, x0,
     while iterations < maxiter:
         xold = x.copy()
         y = prox_fs(y + sigma*K(x1), sigma)
-        x = prox_g(x - tau*KS(y), tau)
+        x = prox_g(x - tau*K.T(y), tau)
         x1 = x + theta * (x-xold)
 
         if callback is not None:

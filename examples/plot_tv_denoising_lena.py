@@ -42,7 +42,7 @@ def divergence(p):
 
 # Minimization of F(K*x) + G(x)
 K = gradient
-KS = divergence
+K.T = divergence
 amp = lambda u : np.sqrt(np.sum(u ** 2,axis=2))
 F = lambda u : alpha * np.sum(amp(u))
 G = lambda x : 1/2 * np.linalg.norm(y-x,'fro') ** 2
@@ -60,7 +60,7 @@ proxG = lambda x,tau : (x + tau*y) / (1+tau)
 callback = lambda x : G(x) + F(K(x))
 
 t1 = time.time()
-xRec, cx = pp.admm(proxFS, proxG, K, KS, y,
+xRec, cx = pp.admm(proxFS, proxG, K, y,
          maxiter=300, full_output=1, callback=callback)
 t2 = time.time()
 print "Performed 300 iterations in " + str(t2-t1) + " seconds."

@@ -1,5 +1,5 @@
 from __future__ import division
-from numpy.testing import assert_almost_equal, assert_array_almost_equal
+from numpy.testing import assert_array_almost_equal
 
 import numpy as np
 from pyprox.algorithms import douglas_rachford
