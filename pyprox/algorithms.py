@@ -6,7 +6,7 @@ The :mod:`pyprox.algorithms` module includes the proximal schemes of pyprox.
 from __future__ import division
 import numpy as np
 import math
-from pyprox.utils import operator_norm
+from .utils import operator_norm
 
 def _output_helper(full_output, retall, x, fx, iterations, allvecs):
     if full_output:
