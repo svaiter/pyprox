@@ -20,7 +20,6 @@ import sys, os
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('sphinxext'))
-import numpy_ext.numpydoc
 
 # -- General configuration -----------------------------------------------------
 
@@ -39,8 +38,16 @@ extensions = ['gen_rst',
               'sphinx.ext.autodoc',
               'sphinx.ext.autosummary',
               'sphinx.ext.mathjax',
-              'sphinx.ext.viewcode',
-              'numpy_ext.numpydoc']
+              'sphinx.ext.viewcode']
+
+try:
+    import numpy_ext.numpydoc
+    extensions.append('numpy_ext.numpydoc')
+    # With older versions of sphinx, this causes a crash
+    autosummary_generate = True
+except:
+    # Older version of sphinx
+    extensions.append('numpy_ext_old.numpydoc')
 
 autodoc_default_flags = ['members', 'inherited-members']
 
