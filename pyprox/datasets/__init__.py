@@ -1,1 +1,0 @@
-from .base import load_sample_image
