@@ -29,6 +29,7 @@ def configuration(parent_package='', top_path=None):
         namespace_packages=['pyprox'])
 
     config.add_subpackage('pyprox')
+    config.add_subpackage('pyprox/tests')
 
     return config
 
