@@ -8,6 +8,7 @@ import numpy as np
 import math
 from .utils import operator_norm
 
+
 def _output_helper(full_output, retall, x, fx, iterations, allvecs):
     if full_output:
         retlist = x, fx
@@ -20,8 +21,9 @@ def _output_helper(full_output, retall, x, fx, iterations, allvecs):
 
     return retlist
 
+
 def douglas_rachford(prox_f, prox_g, x0,
-                     maxiter=1000, mu = 1, gamma = 1,
+                     maxiter=1000, mu=1, gamma=1,
                      full_output=0, retall=0, callback=None):
     """Minimize the sum of two functions using the Douglas Rachford splitting.
     scheme.
@@ -64,9 +66,10 @@ def douglas_rachford(prox_f, prox_g, x0,
     New York: Springer-Verlag, 2010.
     """
     def rProx_f(x, tau):
-        return 2*prox_f(x, tau) - x
+        return 2 * prox_f(x, tau) - x
+
     def rProx_g(x, tau):
-        return 2*prox_g(x, tau) - x
+        return 2 * prox_g(x, tau) - x
 
     x = x0.copy()
     y = x0.copy()
@@ -75,7 +78,7 @@ def douglas_rachford(prox_f, prox_g, x0,
     iterations = 1
 
     while iterations < maxiter:
-        y = (1-mu/2)*y + mu/2*rProx_f(rProx_g(y, gamma), gamma)
+        y = (1 - mu / 2) * y + mu / 2 * rProx_f(rProx_g(y, gamma), gamma)
         x = prox_g(y, gamma)
 
         if callback is not None:
@@ -85,6 +88,7 @@ def douglas_rachford(prox_f, prox_g, x0,
             allvecs.append(x)
 
     return _output_helper(full_output, retall, x, fx, iterations, allvecs)
+
 
 def forward_backward(prox_f, grad_g, x0, L,
                      maxiter=1000, method='fb', fbdamping=1.8,
@@ -132,7 +136,7 @@ def forward_backward(prox_f, grad_g, x0, L,
     Multiscale Model. Simul., 4 (2005), pp. 1168-1200
     """
     t = 1
-    tt = 2/L
+    tt = 2 / L
     gg = 0
     A = 0
     y = x0.copy()
@@ -144,18 +148,18 @@ def forward_backward(prox_f, grad_g, x0, L,
 
     while iterations <= maxiter:
         if method == 'fb':
-            x = prox_f(x - fbdamping/L * grad_g(x), fbdamping/L)
+            x = prox_f(x - fbdamping / L * grad_g(x), fbdamping / L)
         elif method == 'fista':
-            xnew = prox_f(y - 1/L * grad_g(y), 1/L)
-            tnew = (1+math.sqrt(1 + 4* t ** 2))/2
-            y = xnew + (t-1)/tnew * (xnew-x)
+            xnew = prox_f(y - 1 / L * grad_g(y), 1 / L)
+            tnew = (1 + math.sqrt(1 + 4 * t ** 2)) / 2
+            y = xnew + (t - 1) / tnew * (xnew - x)
             x = xnew
             t = tnew
         elif method == 'nesterov':
-            a = (tt + math.sqrt(tt ** 2 + 4*tt*A))/2
+            a = (tt + math.sqrt(tt ** 2 + 4 * tt * A)) / 2
             v = prox_f(x0 - gg, A)
-            z = (A*x + a*v)/(A+a)
-            x = prox_f(z - 1/L * grad_g(z), 1/L)
+            z = (A * x + a * v) / (A + a)
+            x = prox_f(z - 1 / L * grad_g(z), 1 / L)
             gg += a * grad_g(x)
             A += a
         else:
@@ -169,8 +173,9 @@ def forward_backward(prox_f, grad_g, x0, L,
 
     return _output_helper(full_output, retall, x, fx, iterations, allvecs)
 
+
 def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
-                          maxiter = 100, method='fb', fbdamping=1.8,
+                          maxiter=100, method='fb', fbdamping=1.8,
                           full_output=0, retall=0, callback=None):
     """Minimize the sum of the strongly convex function and a proper convex
     function.
@@ -231,8 +236,8 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
     It uses `forward_backward` as a solver of (**)
     """
     if isinstance(K, np.ndarray):
-        op = lambda u : np.dot(K,u)
-        op.T = lambda u : np.dot(K.T,u)
+        op = lambda u: np.dot(K, u)
+        op.T = lambda u: np.dot(K.T, u)
         return forward_backward_dual(grad_fs, prox_gs, op, x0, L,
             maxiter=maxiter, method=method, fbdamping=fbdamping,
             full_output=full_output, retall=retall, callback=callback)
@@ -240,8 +245,8 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
     if callback is None:
         new_callback = None
     else:
-        new_callback = lambda u : callback(grad_fs(-K.T(u)))
-    new_grad = lambda u : - K(grad_fs(-K.T(u)))
+        new_callback = lambda u: callback(grad_fs(-K.T(u)))
+    new_grad = lambda u: - K(grad_fs(-K.T(u)))
     u0 = K(x0)
     res = forward_backward(prox_gs, new_grad, u0, L, maxiter=maxiter,
         method=method, fbdamping=fbdamping, full_output=full_output,
@@ -253,8 +258,9 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
         res = grad_fs(-K.T(res))
     return res
 
+
 def admm(prox_fs, prox_g, K, x0,
-         maxiter=100, theta = 1, sigma=None, tau=None,
+         maxiter=100, theta=1, sigma=None, tau=None,
          full_output=0, retall=0, callback=None):
     """Minimize an optimization problem using the Preconditioned Alternating
      direction method of multipliers
@@ -306,15 +312,15 @@ def admm(prox_fs, prox_g, K, x0,
     Volume 40, Number 1 (2011)
     """
     if isinstance(K, np.ndarray):
-        op = lambda u : np.dot(K,u)
-        op.T = lambda u : np.dot(K.T,u)
+        op = lambda u: np.dot(K, u)
+        op.T = lambda u: np.dot(K.T, u)
         return admm(prox_fs, prox_g, op, x0, maxiter=maxiter, theta=theta,
             sigma=sigma, tau=tau, full_output=full_output, retall=retall,
             callback=callback)
     if not(sigma and tau):
         L = operator_norm(
-            lambda x : K.T(K(x)),
-            np.random.randn(x0.shape[0],1)
+            lambda x: K.T(K(x)),
+            np.random.randn(x0.shape[0], 1)
         )
         sigma = 10.0
         if sigma * L > 1e-10:
@@ -332,9 +338,9 @@ def admm(prox_fs, prox_g, K, x0,
 
     while iterations < maxiter:
         xold = x.copy()
-        y = prox_fs(y + sigma*K(x1), sigma)
-        x = prox_g(x - tau*K.T(y), tau)
-        x1 = x + theta * (x-xold)
+        y = prox_fs(y + sigma * K(x1), sigma)
+        x = prox_g(x - tau * K.T(y), tau)
+        x1 = x + theta * (x - xold)
 
         if callback is not None:
             fx.append(callback(x))
