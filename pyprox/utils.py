@@ -6,6 +6,7 @@ Misc utils
 from __future__ import division
 import numpy as np
 
+
 def operator_norm(linop, n=None, maxiter=30, check=False):
     if hasattr(linop, 'norm') and not check:
         return linop.norm
@@ -22,7 +23,7 @@ def operator_norm(linop, n=None, maxiter=30, check=False):
         return 0
     e = []
     for i in range(maxiter):
-        if hasattr(linop,'T'):
+        if hasattr(linop, 'T'):
             v = linop.T(linop(u))
         else:
             # assume square (implicit) operator
@@ -31,7 +32,7 @@ def operator_norm(linop, n=None, maxiter=30, check=False):
         vnorm = np.linalg.norm(v[:])
         if vnorm > 1e-10:
             u = v / vnorm
-        else :
+        else:
             return 0
     L = e[-1]
     return L
