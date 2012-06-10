@@ -5,18 +5,16 @@ Total variation denoising using Chambolle Pock
 """
 # Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
 from __future__ import division
-from pyprox import dual_prox
-from pyprox.operators import soft_thresholding
 
 print __doc__
 
 import time
-
 import numpy as np
 from scipy import misc
 import pylab as pl
 
-import pyprox as pp
+from pyprox import dual_prox, admm
+from pyprox.operators import soft_thresholding
 
 # Load image, downsample and convert to a float
 im = misc.lena()
@@ -65,7 +63,7 @@ prox_g = lambda x,tau : (x + tau*y) / (1+tau)
 callback = lambda x : G(x) + F(K(x))
 
 t1 = time.time()
-x_rec, cx = pp.admm(prox_fs, prox_g, K, y,
+x_rec, cx = admm(prox_fs, prox_g, K, y,
          maxiter=300, full_output=1, callback=callback)
 t2 = time.time()
 print "Performed 300 iterations in " + str(t2-t1) + " seconds."
