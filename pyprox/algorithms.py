@@ -53,7 +53,7 @@ def douglas_rachford(prox_f, prox_g, x0,
 
     Returns
     -------
-    xrec: ndarray
+    x_rec: ndarray
     fx: list
 
     References
@@ -122,7 +122,7 @@ def forward_backward(prox_f, grad_g, x0, L,
 
     Returns
     -------
-    xrec: ndarray
+    x_rec: ndarray
     fx: list
 
     References
@@ -211,7 +211,7 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
 
     Returns
     -------
-    xrec: ndarray
+    x_rec: ndarray
     fx: list
 
     Notes
@@ -294,7 +294,7 @@ def admm(prox_fs, prox_g, K, x0,
 
     Returns
     -------
-    xrec: ndarray
+    x_rec: ndarray
     fx: list
 
     References

@@ -15,14 +15,14 @@ def test_fb_virtual_zero():
     # observations of size (5,1)
     y = np.zeros((5,1))
     for method in methods:
-        xRec = forward_backward(prox_f, grad_g, y, 1, method=method)
-        assert_array_almost_equal(y, xRec)
+        x_rec = forward_backward(prox_f, grad_g, y, 1, method=method)
+        assert_array_almost_equal(y, x_rec)
 
     # observations of size (5,2)
     y = np.zeros((5,2))
     for method in methods:
-        xRec = forward_backward(prox_f, grad_g, y, 1, method=method)
-        assert_array_almost_equal(y, xRec)
+        x_rec = forward_backward(prox_f, grad_g, y, 1, method=method)
+        assert_array_almost_equal(y, x_rec)
 
 def test_fb_zero():
     prox_f = lambda u, la : u
@@ -31,14 +31,14 @@ def test_fb_zero():
     # observations of size (5,1)
     y = np.zeros((5,1))
     for method in methods:
-        xRec = forward_backward(prox_f, grad_g, y, 1, method=method)
-        assert_array_almost_equal(y, xRec)
+        x_rec = forward_backward(prox_f, grad_g, y, 1, method=method)
+        assert_array_almost_equal(y, x_rec)
 
     # observations of size (5,2)
     y = np.zeros((5,2))
     for method in methods:
-        xRec = forward_backward(prox_f, grad_g, y, 1, method=method)
-        assert_array_almost_equal(y, xRec)
+        x_rec = forward_backward(prox_f, grad_g, y, 1, method=method)
+        assert_array_almost_equal(y, x_rec)
 
 def test_fb_l1_denoising():
     n = 1000
@@ -52,6 +52,6 @@ def test_fb_l1_denoising():
     grad_g = lambda x: x - y
 
     for method in methods:
-        xRec = forward_backward(prox_f, grad_g, y, 1, method=method)
+        x_rec = forward_backward(prox_f, grad_g, y, 1, method=method)
         #TODO ugly test to change
-        assert_array_almost_equal(x, xRec, decimal=0)
+        assert_array_almost_equal(x, x_rec, decimal=0)
