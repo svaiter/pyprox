@@ -13,13 +13,15 @@ print __doc__
 import time
 
 import numpy as np
+import scipy as sp
 import pylab as plt
 
 import pyprox as pp
-from pyprox.datasets import load_sample_image
 
-# Load image and convert to a column vector
-im = load_sample_image("lena-256")
+# Load image, downsample and convert to a float
+im = sp.misc.lena()
+im = sp.misc.imresize(im, (256, 256)).astype(np.float) / 255.
+
 n = im.shape[0]
 
 # Noisy observations
@@ -27,7 +29,7 @@ sigma = 0.06
 y = im + sigma * np.random.randn(n,n)
 
 # Regularization parameter
-alpha = 0.2
+alpha = 0.1
 
 # Gradient and divergence with periodic boundaries
 def gradient(x):
