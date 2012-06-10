@@ -14,7 +14,7 @@ print __doc__
 import time
 
 import numpy as np
-import pylab as plt
+import pylab as pl
 
 from pyprox import douglas_rachford
 
@@ -38,5 +38,5 @@ x, fx = douglas_rachford(ProxF, ProxG, np.zeros((n,1)),
 t2 = time.time()
 print "Performed 1000 iterations in " + str(t2-t1) + " seconds."
 
-plt.plot(fx)
-plt.show()
+pl.plot(fx)
+pl.show()

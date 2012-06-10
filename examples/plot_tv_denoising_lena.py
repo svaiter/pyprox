@@ -14,7 +14,7 @@ import time
 
 import numpy as np
 import scipy as sp
-import pylab as plt
+import pylab as pl
 
 import pyprox as pp
 
@@ -71,22 +71,22 @@ t2 = time.time()
 print "Performed 300 iterations in " + str(t2-t1) + " seconds."
 
 
-plt.subplot(221)
-imgplot = plt.imshow(im)
+pl.subplot(221)
+imgplot = pl.imshow(im)
 imgplot.set_cmap('gray')
-plt.title('Original')
-plt.axis('off')
-plt.subplot(222)
-imgplot = plt.imshow(y)
+pl.title('Original')
+pl.axis('off')
+pl.subplot(222)
+imgplot = pl.imshow(y)
 imgplot.set_cmap('gray')
-plt.title('Noisy')
-plt.axis('off')
-plt.subplot(223)
-imgplot = plt.imshow(xRec)
+pl.title('Noisy')
+pl.axis('off')
+pl.subplot(223)
+imgplot = pl.imshow(xRec)
 imgplot.set_cmap('gray')
-plt.title('TV Regularization')
-plt.axis('off')
-plt.subplot(224)
-fplot = plt.plot(cx)
-plt.title('Objective versus iterations')
-plt.show()
+pl.title('TV Regularization')
+pl.axis('off')
+pl.subplot(224)
+fplot = pl.plot(cx)
+pl.title('Objective versus iterations')
+pl.show()

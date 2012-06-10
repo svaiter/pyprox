@@ -14,7 +14,7 @@ print __doc__
 import time
 
 import numpy as np
-import pylab as plt
+import pylab as pl
 
 from pyprox import forward_backward, soft_thresholding
 
@@ -55,8 +55,8 @@ for method in methods:
 
 e = np.min(res.flatten())
 
-plt.loglog(res[:(maxiter // 10),:] - e)
-plt.legend(methods)
-plt.grid(True,which="both",ls="-")
-plt.tight_layout()
-plt.show()
+pl.loglog(res[:(maxiter // 10),:] - e)
+pl.legend(methods)
+pl.grid(True,which="both",ls="-")
+pl.tight_layout()
+pl.show()
