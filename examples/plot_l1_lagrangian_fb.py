@@ -32,8 +32,8 @@ methods = ['fb', 'fista', 'nesterov']
 # operator callbacks
 F = lambda x: la*np.linalg.norm(x,1)
 G = lambda x: 1/2*np.linalg.norm(y - np.dot(A,x)) ** 2
-ProxF = lambda x,tau: soft_thresholding(x, la*tau)
-GradG = lambda x: np.dot(A.T,np.dot(A,x) - y)
+prox_f = lambda x,tau: soft_thresholding(x, la*tau)
+grad_g = lambda x: np.dot(A.T,np.dot(A,x) - y)
 
 L = np.linalg.norm(A, 2) ** 2 #Lipschitz constant
 
@@ -44,7 +44,7 @@ res = np.zeros((maxiter,len(methods)))
 i = 0
 for method in methods:
     t1 = time.time()
-    x, fx = forward_backward(ProxF, GradG, np.zeros((n,1)), L,
+    x, fx = forward_backward(prox_f, grad_g, np.zeros((n,1)), L,
         maxiter=maxiter, method=method,
         full_output=1, retall=0, callback=callback)
     t2 = time.time()

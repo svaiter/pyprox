@@ -56,16 +56,16 @@ G = lambda x : 1/2 * np.linalg.norm(y-x,'fro') ** 2
 normalize = lambda u : u/np.tile(
     (np.maximum(amp(u), 1e-10))[:,:,np.newaxis],
     (1,1,2))
-proxF = lambda u,tau : np.tile(
+prox_f = lambda u,tau : np.tile(
     soft_thresholding(amp(u), alpha*tau)[:,:,np.newaxis],
     (1,1,2) )* normalize(u)
-proxFS = dual_prox(proxF)
-proxG = lambda x,tau : (x + tau*y) / (1+tau)
+prox_fs = dual_prox(prox_f)
+prox_g = lambda x,tau : (x + tau*y) / (1+tau)
 
 callback = lambda x : G(x) + F(K(x))
 
 t1 = time.time()
-xRec, cx = pp.admm(proxFS, proxG, K, y,
+x_rec, cx = pp.admm(prox_fs, prox_g, K, y,
          maxiter=300, full_output=1, callback=callback)
 t2 = time.time()
 print "Performed 300 iterations in " + str(t2-t1) + " seconds."
@@ -82,7 +82,7 @@ imgplot.set_cmap('gray')
 pl.title('Noisy')
 pl.axis('off')
 pl.subplot(223)
-imgplot = pl.imshow(xRec)
+imgplot = pl.imshow(x_rec)
 imgplot.set_cmap('gray')
 pl.title('TV Regularization')
 pl.axis('off')

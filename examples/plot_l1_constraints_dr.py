@@ -28,12 +28,12 @@ y = np.random.randn(p,1)
 
 # operator callbacks
 F = lambda x: np.linalg.norm(x,1)
-ProxF = soft_thresholding
-ProxG = lambda x,tau: x + np.dot(A.T, np.linalg.solve(np.dot(A,A.T),
+prox_f = soft_thresholding
+prox_g = lambda x,tau: x + np.dot(A.T, np.linalg.solve(np.dot(A,A.T),
     y - np.dot(A,x)))
 
 t1 = time.time()
-x, fx = douglas_rachford(ProxF, ProxG, np.zeros((n,1)),
+x, fx = douglas_rachford(prox_f, prox_g, np.zeros((n,1)),
     maxiter=1000, full_output=1, retall=0, callback=F)
 t2 = time.time()
 print "Performed 1000 iterations in " + str(t2-t1) + " seconds."
