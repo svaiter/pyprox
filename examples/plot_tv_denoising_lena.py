@@ -13,14 +13,14 @@ print __doc__
 import time
 
 import numpy as np
-import scipy as sp
+from scipy import misc
 import pylab as pl
 
 import pyprox as pp
 
 # Load image, downsample and convert to a float
-im = sp.misc.lena()
-im = sp.misc.imresize(im, (256, 256)).astype(np.float) / 255.
+im = misc.lena()
+im = misc.imresize(im, (256, 256)).astype(np.float) / 255.
 
 n = im.shape[0]
 
