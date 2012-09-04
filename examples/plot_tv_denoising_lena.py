@@ -11,6 +11,7 @@ print __doc__
 import time
 import numpy as np
 from scipy import misc
+import scipy.linalg as lin
 import pylab as pl
 
 from pyprox import dual_prox, admm
@@ -51,7 +52,7 @@ K = gradient
 K.T = divergence
 amp = lambda u: np.sqrt(np.sum(u ** 2, axis=2))
 F = lambda u: alpha * np.sum(amp(u))
-G = lambda x: 1 / 2 * np.linalg.norm(y - x, 'fro') ** 2
+G = lambda x: 1 / 2 * lin.norm(y - x, 'fro') ** 2
 
 # Proximity operators
 normalize = lambda u: u / np.tile(

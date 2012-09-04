@@ -5,6 +5,7 @@ Misc utils
 
 from __future__ import division
 import numpy as np
+import scipy.linalg as lin
 
 
 def operator_norm(linop, n=None, maxiter=30, check=False):
@@ -16,7 +17,7 @@ def operator_norm(linop, n=None, maxiter=30, check=False):
         u = np.random.randn(n, 1)
     else:
         u = n
-    unorm = np.linalg.norm(u)
+    unorm = lin.norm(u)
     if unorm > 1e-10:
         u = u / unorm
     else:
@@ -29,7 +30,7 @@ def operator_norm(linop, n=None, maxiter=30, check=False):
             # assume square (implicit) operator
             v = linop(u)
         e.append((u[:] * v[:]).sum())
-        vnorm = np.linalg.norm(v[:])
+        vnorm = lin.norm(v[:])
         if vnorm > 1e-10:
             u = v / vnorm
         else:

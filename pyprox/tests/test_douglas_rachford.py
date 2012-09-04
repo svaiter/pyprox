@@ -2,6 +2,7 @@ from __future__ import division
 from numpy.testing import assert_array_almost_equal
 
 import numpy as np
+import scipy.linalg as lin
 from pyprox.algorithms import douglas_rachford
 from pyprox.operators import soft_thresholding
 
@@ -52,7 +53,7 @@ def test_dr_l1_cs():
 
     # operator callbacks
     prox_f = soft_thresholding
-    prox_g = lambda x, tau: x + np.dot(A.T, np.linalg.solve(np.dot(A, A.T),
+    prox_g = lambda x, tau: x + np.dot(A.T, lin.solve(np.dot(A, A.T),
         y - np.dot(A, x)))
 
     x_rec = douglas_rachford(prox_f, prox_g, np.zeros((n, 1)), maxiter=1000)

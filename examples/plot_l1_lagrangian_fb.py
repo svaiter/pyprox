@@ -14,6 +14,7 @@ print __doc__
 import time
 
 import numpy as np
+import scipy.linalg as lin
 import pylab as pl
 
 from pyprox import forward_backward, soft_thresholding
@@ -30,12 +31,12 @@ y = np.random.randn(p, 1)
 methods = ['fb', 'fista', 'nesterov']
 
 # operator callbacks
-F = lambda x: la * np.linalg.norm(x, 1)
-G = lambda x: 1 / 2 * np.linalg.norm(y - np.dot(A, x)) ** 2
+F = lambda x: la * lin.norm(x, 1)
+G = lambda x: 1 / 2 * lin.norm(y - np.dot(A, x)) ** 2
 prox_f = lambda x, tau: soft_thresholding(x, la * tau)
 grad_g = lambda x: np.dot(A.T, np.dot(A, x) - y)
 
-L = np.linalg.norm(A, 2) ** 2  # Lipschitz constant
+L = lin.norm(A, 2) ** 2  # Lipschitz constant
 
 callback = lambda x: F(x) + G(x)
 maxiter = 1000
