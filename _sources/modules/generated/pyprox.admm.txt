@@ -1,0 +1,7 @@
+pyprox.admm
+===========
+
+.. currentmodule:: pyprox
+
+.. autofunction:: admm
+

@@ -1,0 +1,27 @@
+
+
+.. _example_plot_l1_constraints_dr.py:
+
+
+===================================
+Basis Pursuit with Douglas Rachford
+===================================
+
+
+
+
+.. image:: images/plot_l1_constraints_dr_1.png
+    :align: center
+
+
+**Script output**::
+
+  Performed 1000 iterations in 2.37806200981 seconds.
+
+
+
+**Python source code:** :download:`plot_l1_constraints_dr.py <plot_l1_constraints_dr.py>`
+
+.. literalinclude:: plot_l1_constraints_dr.py
+    :lines: 7-
+    

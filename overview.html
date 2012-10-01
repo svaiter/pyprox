@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Overview of pyprox &mdash; pyprox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="pyprox 0.1 documentation" href="index.html" />
+    <link rel="up" title="&lt;no title&gt;" href="user_guide.html" />
+    <link rel="next" title="2. Examples" href="auto_examples/index.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="user_guide.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a></li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="auto_examples/index.html" title="2. Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="user_guide.html" title="&lt;no title&gt;"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyprox 0.1 documentation</a> &raquo;</li>
+          <li><a href="user_guide.html" accesskey="U">&lt;no title&gt;</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Overview of <tt class="docutils literal"><span class="pre">pyprox</span></tt></a><ul>
+<li><a class="reference internal" href="#simple-example">1.1. Simple example</a></li>
+<li><a class="reference internal" href="#requirements">1.2. Requirements</a></li>
+<li><a class="reference internal" href="#download">1.3. Download</a></li>
+<li><a class="reference internal" href="#license">1.4. License</a></li>
+<li><a class="reference internal" href="#contact">1.5. Contact</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="user_guide.html"
+                        title="previous chapter">&lt;no title&gt;</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="auto_examples/index.html"
+                        title="next chapter">2. Examples</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="overview-of-pyprox">
+<h1>1. Overview of <a class="reference internal" href="modules/classes.html#module-pyprox" title="pyprox"><tt class="xref py py-obj docutils literal"><span class="pre">pyprox</span></tt></a><a class="headerlink" href="#overview-of-pyprox" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="modules/classes.html#module-pyprox" title="pyprox"><tt class="xref py py-obj docutils literal"><span class="pre">pyprox</span></tt></a> is a free Open Source proximal algorithm library for Python
+programming language.</p>
+<div class="section" id="simple-example">
+<h2>1.1. Simple example<a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="modules/classes.html#module-pyprox" title="pyprox"><tt class="xref py py-obj docutils literal"><span class="pre">pyprox</span></tt></a> aims to bring simplicity to software using proximal algorithms.
+To start using it, install the package, open the the Python interactive
+shell and type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyprox</span> <span class="kn">as</span> <span class="nn">pp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ProxF</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">soft_thresholding</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">GradG</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xrec</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">forward_backward</span><span class="p">(</span><span class="n">ProxF</span><span class="p">,</span> <span class="n">GradG</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="requirements">
+<h2>1.2. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="modules/classes.html#module-pyprox" title="pyprox"><tt class="xref py py-obj docutils literal"><span class="pre">pyprox</span></tt></a> requires <em class="xref py py-obj">Python</em> 2.5-2.7 installed.
+The only external requirement is a recent version of
+<a class="reference external" href="http://numpy.scipy.org/">NumPy</a> numeric array module.</p>
+</div>
+<div class="section" id="download">
+<h2>1.3. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+<p>The most recent <em>development</em> version can be found on Github at:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Github - <a class="reference external" href="https://github.com/svaiter/pyprox">https://github.com/svaiter/pyprox</a></li>
+</ul>
+</div></blockquote>
+<p>Latest release is available for download from the Python Package Index at
+<a class="reference external" href="http://pypi.python.org/pypi/pyprox/">http://pypi.python.org/pypi/pyprox/</a>.</p>
+</div>
+<div class="section" id="license">
+<h2>1.4. License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="modules/classes.html#module-pyprox" title="pyprox"><tt class="xref py py-obj docutils literal"><span class="pre">pyprox</span></tt></a> is a free Open Source software available under the New BSD license
+terms.</p>
+</div>
+<div class="section" id="contact">
+<h2>1.5. Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
+<p>Post your suggestions and guestions to <a class="reference external" href="http://groups.google.com/group/pyprox">pyprox discussions
+group</a> (<a class="reference external" href="mailto:pyprox&#37;&#52;&#48;googlegroups&#46;com">pyprox<span>&#64;</span>googlegroups<span>&#46;</span>com</a>).</p>
+<p>Comments, bug reports and fixes are welcome through <a class="reference external" href="https://github.com/svaiter/pyprox">Github</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a></li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="auto_examples/index.html" title="2. Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="user_guide.html" title="&lt;no title&gt;"
+             >previous</a> |</li>
+        <li><a href="index.html">pyprox 0.1 documentation</a> &raquo;</li>
+          <li><a href="user_guide.html" >&lt;no title&gt;</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Samuel Vaiter.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

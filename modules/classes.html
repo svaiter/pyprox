@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Reference &mdash; pyprox 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="pyprox 0.1 documentation" href="../index.html" />
+    <link rel="up" title="&lt;no title&gt;" href="../user_guide.html" />
+    <link rel="next" title="3.1.1.1. pyprox.douglas_rachford" href="generated/pyprox.douglas_rachford.html" />
+    <link rel="prev" title="2.1.3. Total variation denoising using Chambolle Pock" href="../auto_examples/plot_tv_denoising_lena.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pyprox.douglas_rachford.html" title="3.1.1.1. pyprox.douglas_rachford"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../auto_examples/plot_tv_denoising_lena.html" title="2.1.3. Total variation denoising using Chambolle Pock"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyprox 0.1 documentation</a> &raquo;</li>
+          <li><a href="../user_guide.html" accesskey="U">&lt;no title&gt;</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Reference</a><ul>
+<li><a class="reference internal" href="#module-pyprox">3.1. <tt class="docutils literal"><span class="pre">pyprox</span></tt>: Proximal algorithms</a><ul>
+<li><a class="reference internal" href="#primal-algorithms">3.1.1. Primal algorithms</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#dual-algorithms">3.1.2. Dual algorithms</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#primal-dual-algorithms">3.1.3. Primal-dual algorithms</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../auto_examples/plot_tv_denoising_lena.html"
+                        title="previous chapter">2.1.3. Total variation denoising using Chambolle Pock</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/pyprox.douglas_rachford.html"
+                        title="next chapter">3.1.1.1. pyprox.douglas_rachford</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/modules/classes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reference">
+<h1>3. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<p>This is the class and function reference of pyprox.</p>
+<div class="contents local topic" id="list-of-modules">
+<p class="topic-title first">List of modules</p>
+<ul class="simple">
+<li><a class="reference internal" href="#module-pyprox" id="id1"><a class="reference internal" href="#module-pyprox" title="pyprox"><tt class="xref py py-mod docutils literal"><span class="pre">pyprox</span></tt></a>: Proximal algorithms</a><ul>
+<li><a class="reference internal" href="#primal-algorithms" id="id2">Primal algorithms</a></li>
+<li><a class="reference internal" href="#dual-algorithms" id="id3">Dual algorithms</a></li>
+<li><a class="reference internal" href="#primal-dual-algorithms" id="id4">Primal-dual algorithms</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="module-pyprox">
+<span id="pyprox-proximal-algorithms"></span><span id="algorithms"></span><h2><a class="toc-backref" href="#id1">3.1. <a class="reference internal" href="#module-pyprox" title="pyprox"><tt class="xref py py-mod docutils literal"><span class="pre">pyprox</span></tt></a>: Proximal algorithms</a><a class="headerlink" href="#module-pyprox" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="primal-algorithms">
+<h3><a class="toc-backref" href="#id2">3.1.1. Primal algorithms</a><a class="headerlink" href="#primal-algorithms" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pyprox.douglas_rachford.html#pyprox.douglas_rachford" title="pyprox.douglas_rachford"><tt class="xref py py-obj docutils literal"><span class="pre">douglas_rachford</span></tt></a>(prox_f,&nbsp;prox_g,&nbsp;x0[,&nbsp;...])</td>
+<td>Minimize the sum of two functions using the Douglas Rachford splitting.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pyprox.forward_backward.html#pyprox.forward_backward" title="pyprox.forward_backward"><tt class="xref py py-obj docutils literal"><span class="pre">forward_backward</span></tt></a>(prox_f,&nbsp;grad_g,&nbsp;x0,&nbsp;L[,&nbsp;...])</td>
+<td>Minimize the sum of two functions using the Forward-backward splitting.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dual-algorithms">
+<h3><a class="toc-backref" href="#id3">3.1.2. Dual algorithms</a><a class="headerlink" href="#dual-algorithms" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pyprox.forward_backward_dual.html#pyprox.forward_backward_dual" title="pyprox.forward_backward_dual"><tt class="xref py py-obj docutils literal"><span class="pre">forward_backward_dual</span></tt></a>(grad_fs,&nbsp;prox_gs,&nbsp;K,&nbsp;x0,&nbsp;L)</td>
+<td>Minimize the sum of the strongly convex function and a proper convex function.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="primal-dual-algorithms">
+<h3><a class="toc-backref" href="#id4">3.1.3. Primal-dual algorithms</a><a class="headerlink" href="#primal-dual-algorithms" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pyprox.admm.html#pyprox.admm" title="pyprox.admm"><tt class="xref py py-obj docutils literal"><span class="pre">admm</span></tt></a>(prox_fs,&nbsp;prox_g,&nbsp;K,&nbsp;x0[,&nbsp;maxiter,&nbsp;...])</td>
+<td>Minimize an optimization problem using the Preconditioned Alternating</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a></li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pyprox.douglas_rachford.html" title="3.1.1.1. pyprox.douglas_rachford"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../auto_examples/plot_tv_denoising_lena.html" title="2.1.3. Total variation denoising using Chambolle Pock"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyprox 0.1 documentation</a> &raquo;</li>
+          <li><a href="../user_guide.html" >&lt;no title&gt;</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Samuel Vaiter.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

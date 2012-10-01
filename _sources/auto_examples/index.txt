@@ -1,0 +1,79 @@
+
+.. raw:: html
+    
+    
+    <style type="text/css">
+    
+    div#sidebarbutton {
+        display: none;
+    }
+
+    .figure {
+        float: left;
+        margin: 10px;
+        width: auto;
+        height: 200px;
+        width: 180px;
+    }
+
+    .figure img {
+        display: inline;
+        }
+
+    .figure .caption {
+        width: 170px;
+        text-align: center !important;
+    }
+    </style>
+
+Examples
+========
+
+.. _examples-index:
+
+
+
+.. _general_examples:
+
+General examples
+----------------
+
+General-purpose and introductory examples for the pyprox.
+
+
+
+.. figure:: ./images/thumb/plot_l1_constraints_dr.png
+   :target: ./plot_l1_constraints_dr.html
+
+   :ref:`example_plot_l1_constraints_dr.py`
+
+.. toctree::
+   :hidden:
+
+   ./plot_l1_constraints_dr
+
+.. figure:: ./images/thumb/plot_l1_lagrangian_fb.png
+   :target: ./plot_l1_lagrangian_fb.html
+
+   :ref:`example_plot_l1_lagrangian_fb.py`
+
+.. toctree::
+   :hidden:
+
+   ./plot_l1_lagrangian_fb
+
+.. figure:: ./images/thumb/plot_tv_denoising_lena.png
+   :target: ./plot_tv_denoising_lena.html
+
+   :ref:`example_plot_tv_denoising_lena.py`
+
+.. toctree::
+   :hidden:
+
+   ./plot_tv_denoising_lena
+
+
+.. raw:: html
+
+    <div style="clear: both"></div>
+    

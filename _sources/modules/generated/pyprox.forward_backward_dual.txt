@@ -1,0 +1,7 @@
+pyprox.forward_backward_dual
+============================
+
+.. currentmodule:: pyprox
+
+.. autofunction:: forward_backward_dual
+

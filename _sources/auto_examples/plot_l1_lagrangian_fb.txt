@@ -1,0 +1,31 @@
+
+
+.. _example_plot_l1_lagrangian_fb.py:
+
+
+=================================================================
+Basis Pursuit Denoising with Forward-Backward : CS Regularization
+=================================================================
+
+Test the use of Forward-backward-like splitting for the resolution of a
+compressed sensing regularization
+
+
+
+.. image:: images/plot_l1_lagrangian_fb_1.png
+    :align: center
+
+
+**Script output**::
+
+  [fb]: Performed 1000 iterations in 0.147185087204seconds.
+  [fista]: Performed 1000 iterations in 0.164345979691seconds.
+  [nesterov]: Performed 1000 iterations in 0.285757064819seconds.
+
+
+
+**Python source code:** :download:`plot_l1_lagrangian_fb.py <plot_l1_lagrangian_fb.py>`
+
+.. literalinclude:: plot_l1_lagrangian_fb.py
+    :lines: 9-
+    

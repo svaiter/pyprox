@@ -1,0 +1,26 @@
+
+
+.. _example_plot_tv_denoising_lena.py:
+
+
+==============================================
+Total variation denoising using Chambolle Pock
+==============================================
+
+
+
+.. image:: images/plot_tv_denoising_lena_1.png
+    :align: center
+
+
+**Script output**::
+
+  Performed 300 iterations in 4.42269611359 seconds.
+
+
+
+**Python source code:** :download:`plot_tv_denoising_lena.py <plot_tv_denoising_lena.py>`
+
+.. literalinclude:: plot_tv_denoising_lena.py
+    :lines: 6-
+    

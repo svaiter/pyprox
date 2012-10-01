@@ -1,0 +1,7 @@
+pyprox.douglas_rachford
+=======================
+
+.. currentmodule:: pyprox
+
+.. autofunction:: douglas_rachford
+
