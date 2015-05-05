@@ -16,6 +16,7 @@ import pylab as pl
 
 from pyprox import dual_prox, admm
 from pyprox.operators import soft_thresholding
+from pyprox.context import Context
 
 # Load image, downsample and convert to a float
 im = misc.lena()
@@ -64,11 +65,13 @@ prox_f = lambda u, tau: np.tile(
 prox_fs = dual_prox(prox_f)
 prox_g = lambda x, tau: (x + tau * y) / (1 + tau)
 
-callback = lambda x: G(x) + F(K(x))
+
+# context
+ctx = Context(full_output=True, maxiter=300)
+ctx.callback = lambda x: G(x) + F(K(x))
 
 t1 = time.time()
-x_rec, cx = admm(prox_fs, prox_g, K, y,
-         maxiter=300, full_output=1, callback=callback)
+x_rec, cx = admm(prox_fs, prox_g, K, y, context=ctx)
 t2 = time.time()
 print "Performed 300 iterations in " + str(t2 - t1) + " seconds."
 

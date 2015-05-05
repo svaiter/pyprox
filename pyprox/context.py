@@ -21,8 +21,10 @@ class Context(object):
         Called as callback(xk), where xk is the current parameter vector.
     """
     def __init__(self, criterion=maxiter_criterion,
-                 full_output=False, retall=False, callback=None):
+                 full_output=False, retall=False, callback=None, **kwargs):
         self.criterion = criterion
+        if 'maxiter' in kwargs:
+            self.criterion = lambda v, i, a, f: maxiter_criterion(v, i, a, f, maxiter=kwargs['maxiter'])
         self.full_output = full_output
         self.retall = retall
         self.callback = callback
@@ -39,7 +41,7 @@ class Context(object):
             if self.retall:
                 allvecs.append(x)
             if self.callback:
-                fx.append(callback(x))
+                fx.append(self.callback(x))
             iteration += 1
         return self._output_helper(x, fx, allvecs)
 
