@@ -1,5 +1,15 @@
+"""
+The :mod:`pyprox.context` module includes the definition of severals contexts.
+"""
+# Author: Samuel Vaiter <samuel.vaiter@gmail.com>
+
+
+def maxiter_criterion(values, iteration, allvecs, fx, maxiter=100):
+    return iteration < maxiter
+
+
 class Context(object):
-    """Blabla
+    """A Context object
     maxiter : int, optional
         maximum number of iterations.
     full_output : bool, optional
@@ -10,16 +20,18 @@ class Context(object):
         An optional user-supplied function to call after each iteration.
         Called as callback(xk), where xk is the current parameter vector.
     """
-    def __init__(self):
-        self.maxiter = 100
-        self.full_output = 0
-        self.retall = 0
-        self.callback = None
+    def __init__(self, criterion=maxiter_criterion,
+                 full_output=False, retall=False, callback=None):
+        self.criterion = criterion
+        self.full_output = full_output
+        self.retall = retall
+        self.callback = callback
 
     def execute(self, values, step):
         allvecs = [values[0]]
         fx = []
-        for i in range(self.maxiter):
+        iteration = 0
+        while self.criterion(values, iteration, allvecs, fx):
             values = step(*values)
             x = values[0]
             if self.full_output:
@@ -28,6 +40,7 @@ class Context(object):
                 allvecs.append(x)
             if self.callback:
                 fx.append(callback(x))
+            iteration += 1
         return self._output_helper(x, fx, allvecs)
 
     def _output_helper(self, x, fx, allvecs):

@@ -30,6 +30,8 @@ def douglas_rachford(prox_f, prox_g, x0,
         initial guess for the solution.
     mu : float, optional
     gamma : float, optional
+    context: Context
+        the context (default to defaultContext)
 
     Returns
     -------
@@ -83,6 +85,8 @@ def forward_backward(prox_f, grad_g, x0, L,
     method : string, optional,
         can be 'fb', 'fista' or 'nesterov'
     fbdamping : float, optional
+    context: Context
+        the context (default to defaultContext)
 
     Returns
     -------
@@ -166,6 +170,8 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
     method : string, optional,
         can be 'fb', 'fista' or 'nesterov'
     fbdamping : float, optional
+    context: Context
+        the context (default to defaultContext)
 
     Returns
     -------
@@ -241,6 +247,8 @@ def admm(prox_fs, prox_g, K, x0,
     sigma : float, optional
         parameters of the method.
         They should satisfy sigma * tay * norm(K)^2 < 1
+    context: Context
+        the context (default to defaultContext)
 
     Returns
     -------
