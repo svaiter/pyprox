@@ -1,7 +1,7 @@
 """
 The :mod:`pyprox.algorithms` module includes the proximal schemes of pyprox.
 """
-# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
+# Author: Samuel Vaiter <samuel.vaiter@gmail.com>
 
 from __future__ import division
 import numpy as np

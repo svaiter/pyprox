@@ -4,7 +4,7 @@ Basis Pursuit with Douglas Rachford
 ===================================
 
 """
-# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
+# Author: Samuel Vaiter <samuel.vaiter@gmail.com>
 from __future__ import division
 print __doc__
 

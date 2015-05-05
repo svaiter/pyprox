@@ -6,7 +6,7 @@ Basis Pursuit Denoising with Forward-Backward : CS Regularization
 Test the use of Forward-backward-like splitting for the resolution of a
 compressed sensing regularization
 """
-# Author: Samuel Vaiter <samuel.vaiter@ceremade.dauphine.fr>
+# Author: Samuel Vaiter <samuel.vaiter@gmail.com>
 from __future__ import division
 print __doc__
 

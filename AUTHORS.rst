@@ -1,8 +1,6 @@
-.. -*- mode: rst -*-
-
 People
 ------
 
 .. hlist::
 
-    * `Samuel Vaiter <http://www.ceremade.dauphine.fr/~vaiter/>`_
+    * `Samuel Vaiter <http://samuelvaiter.com/>`_
