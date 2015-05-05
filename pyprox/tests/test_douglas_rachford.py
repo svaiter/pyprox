@@ -56,5 +56,5 @@ def test_dr_l1_cs():
     prox_g = lambda x, tau: x + np.dot(A.T, lin.solve(np.dot(A, A.T),
         y - np.dot(A, x)))
 
-    x_rec = douglas_rachford(prox_f, prox_g, np.zeros((n, 1)), maxiter=1000)
+    x_rec = douglas_rachford(prox_f, prox_g, np.zeros((n, 1)))
     assert_array_almost_equal(x, x_rec)

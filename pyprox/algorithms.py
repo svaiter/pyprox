@@ -7,24 +7,11 @@ from __future__ import division
 import numpy as np
 import math
 from .utils import operator_norm
-
-
-def _output_helper(full_output, retall, x, fx, iterations, allvecs):
-    if full_output:
-        retlist = x, fx
-        if retall:
-            retlist += (allvecs,)
-    else:
-        retlist = x
-        if retall:
-            retlist = (x, allvecs)
-
-    return retlist
+from .context import Context, defaultContext
 
 
 def douglas_rachford(prox_f, prox_g, x0,
-                     maxiter=1000, mu=1, gamma=1,
-                     full_output=0, retall=0, callback=None):
+                     mu=1, gamma=1, context=defaultContext):
     """Minimize the sum of two functions using the Douglas Rachford splitting.
     scheme.
 
@@ -41,17 +28,8 @@ def douglas_rachford(prox_f, prox_g, x0,
         same as prox_f.
     x0 : ndarray
         initial guess for the solution.
-    maxiter : int, optional
-        maximum number of iterations.
     mu : float, optional
     gamma : float, optional
-    full_output : bool, optional
-        non-zero to return all optional outputs.
-    retall : bool, optional
-        Return a list of results at each iteration if non-zero.
-    callback : callable, optional
-        An optional user-supplied function to call after each iteration.
-        Called as callback(xk), where xk is the current parameter vector.
 
     Returns
     -------
@@ -73,26 +51,17 @@ def douglas_rachford(prox_f, prox_g, x0,
 
     x = x0.copy()
     y = x0.copy()
-    allvecs = [x]
-    fx = []
-    iterations = 1
 
-    while iterations < maxiter:
+    def step(x, y):
         y = (1 - mu / 2) * y + mu / 2 * rProx_f(rProx_g(y, gamma), gamma)
         x = prox_g(y, gamma)
+        return [x, y]
 
-        if callback is not None:
-            fx.append(callback(x))
-        iterations += 1
-        if retall:
-            allvecs.append(x)
-
-    return _output_helper(full_output, retall, x, fx, iterations, allvecs)
+    return context.execute([x, y], step)
 
 
 def forward_backward(prox_f, grad_g, x0, L,
-                     maxiter=1000, method='fb', fbdamping=1.8,
-                     full_output=0, retall=0, callback=None):
+                     method='fb', fbdamping=1.8, context=defaultContext):
     """Minimize the sum of two functions using the Forward-backward splitting.
     scheme.
 
@@ -111,18 +80,9 @@ def forward_backward(prox_f, grad_g, x0, L,
         initial guess for the solution.
     L : float
         Module of Lipschitz of nabla G.
-    maxiter : int, optional
-        maximum number of iterations.
     method : string, optional,
         can be 'fb', 'fista' or 'nesterov'
     fbdamping : float, optional
-    full_output : bool, optional
-        non-zero to return all optional outputs.
-    retall : bool, optional
-        Return a list of results at each iteration if non-zero.
-    callback : callable, optional
-        An optional user-supplied function to call after each iteration.
-        Called as callback(xk), where xk is the current parameter vector.
 
     Returns
     -------
@@ -135,48 +95,50 @@ def forward_backward(prox_f, grad_g, x0, L,
     forward-backward splitting,
     Multiscale Model. Simul., 4 (2005), pp. 1168-1200
     """
+    # FISTA
     t = 1
+
+    # Nesterov
     tt = 2 / L
     gg = 0
     A = 0
+
     y = x0.copy()
     x = x0.copy()
 
-    allvecs = [x]
-    fx = []
-    iterations = 1
+    def step_fb(x):
+        x = prox_f(x - fbdamping / L * grad_g(x), fbdamping / L)
+        return [x]
 
-    while iterations <= maxiter:
-        if method == 'fb':
-            x = prox_f(x - fbdamping / L * grad_g(x), fbdamping / L)
-        elif method == 'fista':
-            xnew = prox_f(y - 1 / L * grad_g(y), 1 / L)
-            tnew = (1 + math.sqrt(1 + 4 * t ** 2)) / 2
-            y = xnew + (t - 1) / tnew * (xnew - x)
-            x = xnew
-            t = tnew
-        elif method == 'nesterov':
-            a = (tt + math.sqrt(tt ** 2 + 4 * tt * A)) / 2
-            v = prox_f(x0 - gg, A)
-            z = (A * x + a * v) / (A + a)
-            x = prox_f(z - 1 / L * grad_g(z), 1 / L)
-            gg += a * grad_g(x)
-            A += a
-        else:
-            raise Exception('ex a def in fb')
+    def step_fista(x, y, t):
+        xnew = prox_f(y - 1 / L * grad_g(y), 1 / L)
+        tnew = (1 + math.sqrt(1 + 4 * t ** 2)) / 2
+        y = xnew + (t - 1) / tnew * (xnew - x)
+        x = xnew
+        t = tnew
+        return [x, y, t]
 
-        if callback is not None:
-            fx.append(callback(x))
-        iterations += 1
-        if retall:
-            allvecs.append(x)
+    def step_nesterov(x, tt, gg, A):
+        a = (tt + math.sqrt(tt ** 2 + 4 * tt * A)) / 2
+        v = prox_f(x0 - gg, A)
+        z = (A * x + a * v) / (A + a)
+        x = prox_f(z - 1 / L * grad_g(z), 1 / L)
+        gg += a * grad_g(x)
+        A += a
+        return [x, tt, gg, A]
 
-    return _output_helper(full_output, retall, x, fx, iterations, allvecs)
+    if method == "fb":
+        return context.execute([x], step_fb)
+    elif method == "fista":
+        return context.execute([x, y, t], step_fista)
+    elif method == "nesterov":
+        return context.execute([x, tt, gg, A], step_nesterov)
+    else:
+        raise Exception('ex a def in fb')
 
 
 def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
-                          maxiter=100, method='fb', fbdamping=1.8,
-                          full_output=0, retall=0, callback=None):
+                          method='fb', fbdamping=1.8, context=defaultContext):
     """Minimize the sum of the strongly convex function and a proper convex
     function.
 
@@ -201,18 +163,9 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
         initial guess for the solution.
     L : float
         Module of Lipschitz of nabla G.
-    maxiter : int, optional
-        maximum number of iterations.
     method : string, optional,
         can be 'fb', 'fista' or 'nesterov'
     fbdamping : float, optional
-    full_output : bool, optional
-        non-zero to return all optional outputs.
-    retall : bool, optional
-        Return a list of results at each iteration if non-zero.
-    callback : callable, optional
-        An optional user-supplied function to call after each iteration.
-        Called as callback(xk), where xk is the current parameter vector.
 
     Returns
     -------
@@ -238,19 +191,20 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
     if isinstance(K, np.ndarray):
         op = lambda u: np.dot(K, u)
         op.T = lambda u: np.dot(K.T, u)
-        return forward_backward_dual(grad_fs, prox_gs, op, x0, L,
-            maxiter=maxiter, method=method, fbdamping=fbdamping,
-            full_output=full_output, retall=retall, callback=callback)
+        return forward_backward_dual(
+            grad_fs, prox_gs, op, x0, L,
+            method=method, fbdamping=fbdamping,
+            context=context)
 
-    if callback is None:
-        new_callback = None
-    else:
-        new_callback = lambda u: callback(grad_fs(-K.T(u)))
+    if context.callback:
+        old_callback = context.callback
+        context.callback = lambda u: old_callback(grad_fs(-K.T(u)))
     new_grad = lambda u: - K(grad_fs(-K.T(u)))
     u0 = K(x0)
-    res = forward_backward(prox_gs, new_grad, u0, L, maxiter=maxiter,
-        method=method, fbdamping=fbdamping, full_output=full_output,
-        retall=retall, callback=new_callback)
+    res = forward_backward(
+        prox_gs, new_grad, u0, L,
+        method=method, fbdamping=fbdamping,
+        context=context)
 
     try:
         res[0] = grad_fs(-K.T(res[0]))
@@ -260,8 +214,7 @@ def forward_backward_dual(grad_fs, prox_gs, K, x0, L,
 
 
 def admm(prox_fs, prox_g, K, x0,
-         maxiter=100, theta=1, sigma=None, tau=None,
-         full_output=0, retall=0, callback=None):
+         theta=1, sigma=None, tau=None, context=defaultContext):
     """Minimize an optimization problem using the Preconditioned Alternating
      direction method of multipliers
 
@@ -284,19 +237,10 @@ def admm(prox_fs, prox_g, K, x0,
         the dual linear operator
     x0 : ndarray
         initial guess for the solution.
-    maxiter : int, optional
-        maximum number of iterations.
     theta : float, optional
     sigma : float, optional
         parameters of the method.
         They should satisfy sigma * tay * norm(K)^2 < 1
-    full_output : bool, optional
-        non-zero to return all optional outputs.
-    retall : bool, optional
-        Return a list of results at each iteration if non-zero.
-    callback : callable, optional
-        An optional user-supplied function to call after each iteration.
-        Called as callback(xk), where xk is the current parameter vector.
 
     Returns
     -------
@@ -314,9 +258,8 @@ def admm(prox_fs, prox_g, K, x0,
     if isinstance(K, np.ndarray):
         op = lambda u: np.dot(K, u)
         op.T = lambda u: np.dot(K.T, u)
-        return admm(prox_fs, prox_g, op, x0, maxiter=maxiter, theta=theta,
-            sigma=sigma, tau=tau, full_output=full_output, retall=retall,
-            callback=callback)
+        return admm(prox_fs, prox_g, op, x0, theta=theta,
+                    sigma=sigma, tau=tau, context=context)
     if not(sigma and tau):
         L = operator_norm(
             lambda x: K.T(K(x)),
@@ -332,20 +275,12 @@ def admm(prox_fs, prox_g, K, x0,
     x1 = x0.copy()
     xold = x0.copy()
     y = K(x)
-    allvecs = [x]
-    fx = []
-    iterations = 1
 
-    while iterations < maxiter:
+    def step(x, x1, xold, y):
         xold = x.copy()
         y = prox_fs(y + sigma * K(x1), sigma)
         x = prox_g(x - tau * K.T(y), tau)
         x1 = x + theta * (x - xold)
+        return [x, x1, xold, y]
 
-        if callback is not None:
-            fx.append(callback(x))
-        iterations += 1
-        if retall:
-            allvecs.append(x)
-
-    return _output_helper(full_output, retall, x, fx, iterations, allvecs)
+    return context.execute([x, x1, xold, y], step)
