@@ -19,3 +19,10 @@ User guide
 
    user_guide
 
+API
+===
+.. toctree::
+   :maxdepth: 2
+
+   api/pyprox
+
