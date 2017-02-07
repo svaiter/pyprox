@@ -2,6 +2,8 @@
 ==============================================
 Total variation denoising using Chambolle Pock
 ==============================================
+
+Test the use of ADMM for a denoising scenario with anistropic TV
 """
 # Author: Samuel Vaiter <samuel.vaiter@gmail.com>
 from __future__ import print_function, division

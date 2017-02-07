@@ -3,6 +3,7 @@
 Basis Pursuit with Douglas Rachford
 ===================================
 
+Test DR for a standard constrained l1-minimization
 """
 # Author: Samuel Vaiter <samuel.vaiter@gmail.com>
 from __future__ import print_function, division
