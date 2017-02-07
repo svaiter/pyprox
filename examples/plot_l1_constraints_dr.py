@@ -5,15 +5,15 @@ Basis Pursuit with Douglas Rachford
 
 """
 # Author: Samuel Vaiter <samuel.vaiter@gmail.com>
-from __future__ import division
-print __doc__
+from __future__ import print_function, division
+print(__doc__)
 
 # modules
 import time
 
 import numpy as np
 import scipy.linalg as lin
-import pylab as pl
+import matplotlib.pylab as plt
 
 from pyprox import douglas_rachford
 from pyprox.operators import soft_thresholding
@@ -39,7 +39,7 @@ ctx.callback = lambda x: lin.norm(x, 1)
 t1 = time.time()
 x, fx = douglas_rachford(prox_f, prox_g, np.zeros((n, 1)), context=ctx)
 t2 = time.time()
-print "Performed 1000 iterations in " + str(t2 - t1) + " seconds."
+print("Performed 1000 iterations in " + str(t2 - t1) + " seconds.")
 
-pl.plot(fx)
-pl.show()
+plt.plot(fx)
+plt.show()

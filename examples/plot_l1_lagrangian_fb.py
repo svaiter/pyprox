@@ -3,19 +3,19 @@
 Basis Pursuit Denoising with Forward-Backward : CS Regularization
 =================================================================
 
-Test the use of Forward-backward-like splitting for the resolution of a
+Test the use of Forward-backward-like spltitting for the resolution of a
 compressed sensing regularization
 """
 # Author: Samuel Vaiter <samuel.vaiter@gmail.com>
-from __future__ import division
-print __doc__
+from __future__ import print_function, division
+print(__doc__)
 
 # modules
 import time
 
 import numpy as np
 import scipy.linalg as lin
-import pylab as pl
+import matplotlib.pylab as plt
 
 from pyprox import forward_backward, soft_thresholding
 from pyprox.context import Context
@@ -51,15 +51,15 @@ for method in methods:
     x, fx = forward_backward(prox_f, grad_g, np.zeros((n, 1)), L,
                              method=method, context=ctx)
     t2 = time.time()
-    print "[" + method + "]: Performed 1000 iterations in " \
-          + str(t2 - t1) + "seconds."
+    print ("[" + method + "]: Performed 1000 iterations in " \
+          + str(t2 - t1) + "seconds.")
     res[:, i] = fx
     i += 1
 
 e = np.min(res.flatten())
 
-pl.loglog(res[:(maxiter // 10), :] - e)
-pl.legend(methods)
-pl.grid(True, which="both", ls="-")
-pl.tight_layout()
-pl.show()
+plt.loglog(res[:(maxiter // 10), :] - e)
+plt.legend(methods)
+plt.grid(True, which="both", ls="-")
+plt.tight_layout()
+plt.show()

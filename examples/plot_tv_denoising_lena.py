@@ -4,22 +4,22 @@ Total variation denoising using Chambolle Pock
 ==============================================
 """
 # Author: Samuel Vaiter <samuel.vaiter@gmail.com>
-from __future__ import division
+from __future__ import print_function, division
 
-print __doc__
+print(__doc__)
 
 import time
 import numpy as np
 from scipy import misc
 import scipy.linalg as lin
-import pylab as pl
+import pylab as plt
 
 from pyprox import dual_prox, admm
 from pyprox.operators import soft_thresholding
 from pyprox.context import Context
 
 # Load image, downsample and convert to a float
-im = misc.lena()
+im = misc.face()[:,:,0]
 im = misc.imresize(im, (256, 256)).astype(np.float) / 255.
 
 n = im.shape[0]
@@ -73,22 +73,22 @@ ctx.callback = lambda x: G(x) + F(K(x))
 t1 = time.time()
 x_rec, cx = admm(prox_fs, prox_g, K, y, context=ctx)
 t2 = time.time()
-print "Performed 300 iterations in " + str(t2 - t1) + " seconds."
+print("Performed 300 iterations in " + str(t2 - t1) + " seconds.")
 
 
-pl.subplot(221)
-pl.imshow(im, cmap='gray')
-pl.title('Original')
-pl.axis('off')
-pl.subplot(222)
-pl.imshow(y, cmap='gray')
-pl.title('Noisy')
-pl.axis('off')
-pl.subplot(223)
-pl.imshow(x_rec, cmap='gray')
-pl.title('TV Regularization')
-pl.axis('off')
-pl.subplot(224)
-fplot = pl.plot(cx)
-pl.title('Objective versus iterations')
-pl.show()
+plt.subplot(221)
+plt.imshow(im, cmap='gray')
+plt.title('Original')
+plt.axis('off')
+plt.subplot(222)
+plt.imshow(y, cmap='gray')
+plt.title('Noisy')
+plt.axis('off')
+plt.subplot(223)
+plt.imshow(x_rec, cmap='gray')
+plt.title('TV Regularization')
+plt.axis('off')
+plt.subplot(224)
+fplot = plt.plot(cx)
+plt.title('Objective versus iterations')
+plt.show()
